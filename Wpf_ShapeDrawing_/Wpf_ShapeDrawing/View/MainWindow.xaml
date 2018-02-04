@@ -1,0 +1,49 @@
+﻿<Window x:Class="Wpf_ShapeDrawing.View.MainWindow" x:Name="mainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_ShapeDrawing"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="1000">
+
+    <Window.Resources>
+        <ItemsPanelTemplate x:Key="canvasPanelTemplate">
+            <Canvas Background="FloralWhite" Width="{Binding ElementName=mainWindow, Path=ActualWidth}" Height="{Binding ElementName=mainWindow, Path=ActualHeight}"/>
+        </ItemsPanelTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Menu x:Name="menu" Padding="5,0,0,0" Background="LightSlateGray">
+            <MenuItem Header="File menu" Background="White" FontSize="20" Margin="0,0,7,0" BorderBrush="Black">
+                <MenuItem Header="New" Command="{Binding NewCanvasCmd}" Background="White" FontSize="20"></MenuItem>
+                <MenuItem Header="Open"  Command="ApplicationCommands.Open" Background="White" FontSize="20"></MenuItem>
+                <MenuItem Header="Save" Background="White" FontSize="20"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="shapes" ItemsSource="{Binding Path= Polygones, Mode=TwoWay}" Header="Shapes menu" Background="White" FontSize="20" Margin="0,0,7,0"  BorderBrush="Black">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Header" Value="{Binding Id}"/>
+                        <Setter Property="IsCheckable" Value="True"/>
+                        <!--<Setter Property="IsChecked" Value="{Binding CanDrag}"/>-->
+                        <Setter Property="Command" Value="{Binding DataContext.SelectPolygonCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"/>
+                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+            <MenuItem Command="{Binding DrawCmd}" BorderBrush="Black" Header="Draw" Background="White" FontSize="20" Margin="0,0,7,0"/>
+        </Menu>
+        <ItemsControl ItemsPanel="{StaticResource canvasPanelTemplate}" Grid.Row="1" ItemsSource="{Binding Path = Polygones}" MouseLeftButtonDown="Canvas_MouseLeftButtonDown">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Polygon Points="{Binding Polygon.Points}" Fill="{Binding Polygon.Fill}" Stroke="{Binding Polygon.Stroke}"
+                             StrokeThickness="{Binding Polygon.StrokeThickness}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
