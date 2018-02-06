@@ -29,15 +29,24 @@
                     <Style TargetType="MenuItem">
                         <Setter Property="Header" Value="{Binding Id}"/>
                         <Setter Property="IsCheckable" Value="True"/>
+                        <Setter Property="StaysOpenOnClick" Value="True"/>
                         <!--<Setter Property="IsChecked" Value="{Binding CanDrag}"/>-->
                         <Setter Property="Command" Value="{Binding DataContext.SelectPolygonCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"/>
                         <Setter Property="CommandParameter" Value="{Binding}"></Setter>
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
+            <MenuItem Header="Mode" Background="White" FontSize="20" Margin="0,0,7,0" BorderBrush="Black">
+                <MenuItem x:Name="DrawingMenu" Header="Drawing" IsChecked="True" Background="White" FontSize="20" Click="Drawing_Click" StaysOpenOnClick="True"></MenuItem>
+                <MenuItem x:Name="MovingMenu" Header="Moving" Background="White" FontSize="20" Click="Moving_Click" StaysOpenOnClick="True"></MenuItem>
+            </MenuItem>
             <MenuItem Command="{Binding DrawCmd}" BorderBrush="Black" Header="Draw" Background="White" FontSize="20" Margin="0,0,7,0"/>
         </Menu>
-        <ItemsControl ItemsPanel="{StaticResource canvasPanelTemplate}" Grid.Row="1" ItemsSource="{Binding Path = Polygones}" MouseLeftButtonDown="Canvas_MouseLeftButtonDown">
+        <ItemsControl MouseLeftButtonDown="ItemsControl_MouseLeftButtonDown"
+                      MouseLeftButtonUp="ItemsControl_MouseLeftButtonUp"
+                      MouseMove="ItemsControl_MouseMove" 
+                      ItemsPanel="{StaticResource canvasPanelTemplate}" Grid.Row="1"
+                      ItemsSource="{Binding Path = Polygones}" Margin="0,0,0,62">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Polygon Points="{Binding Polygon.Points}" Fill="{Binding Polygon.Fill}" Stroke="{Binding Polygon.Stroke}"
