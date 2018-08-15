@@ -9,12 +9,14 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.IO;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
 namespace Wpf_ShapeDrawing.Model
 {
     [Serializable]
     class SpecialPolygon : INotifyPropertyChanged
     {
+        [NonSerialized]
         private Brush fill;
         public Brush Fill
         {
@@ -29,6 +31,7 @@ namespace Wpf_ShapeDrawing.Model
             }
         }
 
+        [NonSerialized]
         private Brush stroke;
         public Brush Stroke
         {
@@ -44,6 +47,7 @@ namespace Wpf_ShapeDrawing.Model
             }
         }
 
+        [NonSerialized]
         private Polygon polygon;
         public Polygon Polygon
         {
@@ -75,6 +79,13 @@ namespace Wpf_ShapeDrawing.Model
             }
         }
 
+         //TO DO It`s just for searilizing. Try to find better way.
+        public string serializedPoints;
+
+        public SpecialPolygon()
+        {
+
+        }
 
         public SpecialPolygon(Polygon p, int _id = -1)
         {
@@ -84,11 +95,46 @@ namespace Wpf_ShapeDrawing.Model
             isSelected = false;
         }
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string nameProp)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(nameProp));
+        }
+
+        [OnSerializing]
+        public void OnSerializing(StreamingContext context)
+        {
+            serializedPoints = "";
+
+            foreach (var item in polygon.Points)
+            {
+                serializedPoints += item.X + ";" + item.Y + "|";
+            }
+        }
+
+        [OnDeserialized]
+        public void OnDeserelized(StreamingContext context)
+        {
+            var p = new Polygon();
+            p.Points = new PointCollection();
+            fill = Brushes.YellowGreen;
+
+            var newPoints = serializedPoints.Split('|');
+
+            foreach (var item in newPoints)
+            {
+                var newPoint = item.Split(';');
+                if (newPoint.Count() == 2)
+                {
+                    p.Points.Add(new System.Windows.Point(Double.Parse(newPoint[0]), Double.Parse(newPoint[1])));
+                }
+            }
+
+            p.Fill = fill;
+            IsSelected = false;
+            Polygon = p;
         }
     }
 }

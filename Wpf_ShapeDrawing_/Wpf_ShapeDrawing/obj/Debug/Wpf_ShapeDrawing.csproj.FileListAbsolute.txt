@@ -28,3 +28,6 @@ D:\Programming\C#\projects_WPF\WPF_ShapeDrawing\Wpf_ShapeDrawing_\Wpf_ShapeDrawi
 D:\Programming\C#\projects_WPF\WPF_ShapeDrawing\Wpf_ShapeDrawing_\Wpf_ShapeDrawing\obj\Debug\Wpf_ShapeDrawing.csproj.CoreCompileInputs.cache
 D:\Programming\C#\projects_WPF\WPF_ShapeDrawing\Wpf_ShapeDrawing_\Wpf_ShapeDrawing\obj\Debug\Wpf_ShapeDrawing.exe
 D:\Programming\C#\projects_WPF\WPF_ShapeDrawing\Wpf_ShapeDrawing_\Wpf_ShapeDrawing\obj\Debug\Wpf_ShapeDrawing.pdb
+D:\Programming\C#\projects_WPF\WPF_ShapeDrawing\Wpf_ShapeDrawing_\Wpf_ShapeDrawing\bin\Debug\System.ValueTuple.dll
+D:\Programming\C#\projects_WPF\WPF_ShapeDrawing\Wpf_ShapeDrawing_\Wpf_ShapeDrawing\bin\Debug\System.ValueTuple.xml
+D:\Programming\C#\projects_WPF\WPF_ShapeDrawing\Wpf_ShapeDrawing_\Wpf_ShapeDrawing\obj\Debug\Wpf_ShapeDrawing.csproj.CopyComplete
